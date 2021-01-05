@@ -7,13 +7,12 @@ var engine, world;
 var box1, pig1,pig3;
 var backgroundImg,platform;
 var bird, slingshot;
-
-var gameState = "onSling";
-var bg = "sprites/bg1.png";
 var score = 0;
 
+var gameState = "onSling";
+
 function preload() {
-    //getBackgroundImg();
+    backgroundImg = loadImage("sprites/bg.png");
 }
 
 function setup(){
@@ -47,29 +46,22 @@ function setup(){
 }
 
 function draw(){
-    if(backgroundImg)
-        background(backgroundImg);
-    
-        noStroke();
-        textSize(35)
-        fill("white")
-        text("Score  " + score, width-300, 50)
-    
+    background(backgroundImg);
+    textSize(35)
+    text("score "+ score,width-300,50)
     Engine.update(engine);
     //strokeWeight(4);
     box1.display();
     box2.display();
     ground.display();
     pig1.display();
-    pig1.score();
     log1.display();
-
+    pig1.score();
     box3.display();
     box4.display();
     pig3.display();
-    pig3.score();
     log3.display();
-
+    pig3.score();
     box5.display();
     log4.display();
     log5.display();
@@ -77,14 +69,13 @@ function draw(){
     bird.display();
     platform.display();
     //log6.display();
-    slingshot.display(); 
-    getBackgroundImg();       
+    slingshot.display();    
 }
 
 function mouseDragged(){
-   // if (gameState!=="launched"){
+    if (gameState!=="launched"){
         Matter.Body.setPosition(bird.body, {x: mouseX , y: mouseY});
-    //}
+    }
 }
 
 
@@ -95,26 +86,6 @@ function mouseReleased(){
 
 function keyPressed(){
     if(keyCode === 32){
-        bird.trajectrory= [];
-       //slingshot.attach(bird.body);
-    }   
-}
-
-async function getBackgroundImg(){
-    var response = await fetch("https://worldtimeapi.org/api/timezone/Asia/Kolkata");
-    var responseJSON = await response.json();
-
-    var datetime = responseJSON.datetime;
-    var hour = datetime.slice(11,13);
-    
-    if(hour>=06 && hour<=12){
-        bg = "sprites/bg2.jpg";
+       // slingshot.attach(bird.body);
     }
-    else{
-    
-        bg = "sprites/bg1.png";
-    }
-
-    backgroundImg = loadImage(bg);
-    console.log(backgroundImg);
 }
